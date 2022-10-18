@@ -9,3 +9,6 @@ album_repo = AlbumRepository.new
 album_repo.all.each do |record|
    p record
 end
+
+
+p album_repo.find(3)
