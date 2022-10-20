@@ -128,6 +128,12 @@ class AlbumRepository
     # Returns an array of Album objects.
   end
 
+  def create(album)
+     # Executes the SQL query:
+    # INSERT INTO  albums (title, release_year, artist_id) VALUES ($1, $2, $3);
+
+    # Returns nothing(just add a record in the DB)
+  end
 end
 ```
 
@@ -164,6 +170,23 @@ albums.title #=> 'Beautiful Trauma'
 albums.release_year #=> '2017'
 albums.artist_id #=> '1'
 
+#3
+#insert new record in the DB
+repository = AlbumRepository.new
+
+album = Album.new
+album.title = 'Trompe le Monde'
+album.release_year = 1991
+album.artist_id = 1
+
+repository.create(album)
+
+all_albums = repository.all
+
+all_albums.last #=> album
+
+# The all_albums array should contain the new Album object
+
 ```
 
 Encode this example as a test.
@@ -192,6 +215,9 @@ describe StudentRepository do
 
   # (your tests will go here).
 end
+
+
+
 ```
 
 ## 8. Test-drive and implement the Repository class behaviour
