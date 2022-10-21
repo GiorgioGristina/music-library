@@ -14,7 +14,7 @@
 # p album_repo.find(3)
 
 # file: app.rb
-
+require_relative './lib/database_connection'
 require_relative './lib/album_repository'
 require_relative './lib/artist_repository'
 
@@ -34,6 +34,15 @@ class Application
   end
 
   def run
+    print("Welcome to the music library manager!")
+    print("What would you like to do?")
+    print_action()
+    print("Enter your choice:")
+    input = get_input
+    p input
+    action(input)
+
+
     # "Runs" the terminal application
     # so it can ask the user to enter some input
     # and then decide to run the appropriate action
@@ -42,7 +51,45 @@ class Application
     # Use `@io.puts` or `@io.gets` to
     # write output and ask for user input.
   end
+
+  private 
+
+  def print(sentence)
+    @io.puts sentence
+  end
+
+  def get_input
+      @io.gets.chomp
+  end
+  
+  def print_action
+    print("1 - List all albums")
+    print("2 - List all artists")
+  
+  end
+
+  def action(choice)
+    case choice
+    when "1"
+      print("Here is the list of albums:")
+      display(@album_repository.all, "album")
+    when "2"
+      print("Here is the list of artist:")
+      display(@artist_repository.all, "artist")
+    else
+      print("wrong command try againg!")
+    end
+  end
+
+  def display(array_object, attribute)
+   
+    array_object.each_with_index do |record, i|
+      print("#{i + 1} - #{attribute == "album" ? record.title : record.name}")
+    end
+  end
 end
+
+
 
 # Don't worry too much about this if statement. It is basically saying "only
 # run the following code if this is the main file being run, instead of having

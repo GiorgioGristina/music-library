@@ -2,22 +2,26 @@ require_relative '../app'
 
 
 RSpec.describe Application do
-    it "" do
+    it "return a list of albums" do
     io = double :io
     album = double :album
     artist = double :artist
+    album1 = double :alb1, title: "Beautiful Trauma"
+    album2 = double :alb2, title: "Try This"
+
     expect(io).to receive(:puts).with("Welcome to the music library manager!")
     expect(io).to receive(:puts).with("What would you like to do?")
     expect(io).to receive(:puts).with("1 - List all albums")
     expect(io).to receive(:puts).with("2 - List all artists")
     expect(io).to receive(:puts).with("Enter your choice:")
-    expect(io).to receive(:gets).and_return(1)
+    expect(io).to receive(:gets).and_return("1")
+    expect(album).to receive(:all).and_return([album1, album2])
+
     expect(io).to receive(:puts).with("Here is the list of albums:")
-    expect(io).to receive(:puts).with("Beautiful Trauma")
-    expect(io).to receive(:puts).with("Try This")
-
-
-    app = Application.new()
+    expect(io).to receive(:puts).with("1 - Beautiful Trauma")
+    expect(io).to receive(:puts).with("2 - Try This")
+# pass the argument
+    app = Application.new('music_library_test', io, album, artist)
     app.run
 
     end
